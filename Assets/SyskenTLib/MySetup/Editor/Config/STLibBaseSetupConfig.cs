@@ -16,7 +16,7 @@ namespace SyskenTLib.MySetUp.Editor
         public List<string> GetCreateDirectoryPathList => _createDirectoryPathList;
 
 
-        [Header("レイヤー")] [TextArea(minLines:10,maxLines:100)] [SerializeField] private string _defaultLayerSetting = "";
-        public string GetDefaultLayerSetting => _defaultLayerSetting;
+        [Header("レイヤー")] [TextArea(minLines:200,maxLines:400)] [SerializeField] private string _originalLayerSetting = "";
+        public string GetOriginalLayerSetting => _originalLayerSetting;
     }
 }

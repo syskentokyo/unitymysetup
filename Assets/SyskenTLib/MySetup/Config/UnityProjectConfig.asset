@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 005be91a45994244bcce468ceb15e461, type: 3}
   m_Name: UnityProjectConfig
   m_EditorClassIdentifier: 
-  _overwriteAppIDType: 0
+  _overwriteAppIDType: -99
   _baseAppID: 
-  _appName: 
+  _appName: demoapp
   _companyName: 
-  _iOSteamID: 
+  _IOSteamID: 
   _iOSTurnONAutomaticSign: 0
-  _iOSSupportMinOSVersion: 16.0
+  _iOSSupportMinOSVersion: 17.5
   _iOSCameraUsage: 
   _iOSMicrophoneUsage: 
   _iOSLocationUsage: 
-  _androidSupportMinOSVersion: 30
-  _androidTargetOSVersion: 30
+  _androidSupportMinOSVersion: 32
+  _androidTargetOSVersion: 34
   _androidTargetOSVersionAddNum: 3

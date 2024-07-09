@@ -330,7 +330,7 @@ namespace SyskenTLib.MySetUp.Editor
                     break;
                 }
 
-                case UnityProjectAppIDType.OverwriteAddRandomID:
+                case UnityProjectAppIDType.OverwriteBaseIDAndAddRandomID:
                 {
                     string dateTxt = DateTime.Now.ToString("yyyyMMddHHmmss");
                     overwriteAppID = _currentUnityProjectSetupConfig.GetBaseAppID + ".app" + dateTxt;
@@ -529,7 +529,7 @@ namespace SyskenTLib.MySetUp.Editor
         {
             string layerSettingText = ReadLayerSettingFile();
 
-            string targetLayerText = _currentBaseSetupConfig.GetDefaultLayerSetting;
+            string targetLayerText = _currentBaseSetupConfig.GetOriginalLayerSetting;
             
             string replaceLayerText = CreateAddLayerSettingText(CountTargetText(targetLayerText,"-"));
             Debug.Log("AddLayer:"+replaceLayerText);
