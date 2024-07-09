@@ -6,6 +6,7 @@ using UnityEditor;
 using UnityEditor.PackageManager;
 using UnityEditor.PackageManager.Requests;
 using UnityEngine;
+using UnityEngine.iOS;
 using UnityEngine.Rendering;
 
 namespace SyskenTLib.MySetUp.Editor
@@ -281,13 +282,7 @@ namespace SyskenTLib.MySetUp.Editor
         #endregion
 
         #region UnityProjectSetting
-
-        public void StartUnityProjectConfig()
-        {
-            StartUnityProjectSettingProcess();
-        }
-
-
+        
         private void StartUnityProjectSetting()
         {
             Debug.Log("UnityProjectSettingの設定開始");
@@ -383,6 +378,39 @@ namespace SyskenTLib.MySetUp.Editor
             string appversion = "1.0.0";
             Debug.Log("アプリバージョン  " + appversion);
             PlayerSettings.bundleVersion = appversion;
+            
+            
+            //
+            //画面の回転
+            //
+            switch (_currentUnityProjectSetupConfig.GetDeviceRotation)
+            {
+                case UnityDeviceRotation.Auto:
+                    break;
+                case UnityDeviceRotation.Portrait:
+                    PlayerSettings.useAnimatedAutorotation = false;
+                    PlayerSettings.defaultInterfaceOrientation = UIOrientation.Portrait;
+                    PlayerSettings.allowedAutorotateToPortrait = false;
+                    break;
+                case UnityDeviceRotation.PortraitUpsideDown:
+                    PlayerSettings.useAnimatedAutorotation = false;
+                    PlayerSettings.defaultInterfaceOrientation = UIOrientation.PortraitUpsideDown;
+                    PlayerSettings.allowedAutorotateToPortraitUpsideDown = false;
+                    break;
+                case UnityDeviceRotation.LandscapeRight:
+                    PlayerSettings.useAnimatedAutorotation = false;
+                    PlayerSettings.defaultInterfaceOrientation = UIOrientation.LandscapeRight;
+                    PlayerSettings.allowedAutorotateToLandscapeRight = false;
+                    break;
+                case UnityDeviceRotation.LandscapeLeft:
+                    PlayerSettings.useAnimatedAutorotation = false;
+                    PlayerSettings.defaultInterfaceOrientation = UIOrientation.LandscapeLeft;
+                    PlayerSettings.allowedAutorotateToLandscapeLeft = false;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
         }
 
         private void StartOverwriteWindowsSetting()
@@ -399,6 +427,7 @@ namespace SyskenTLib.MySetUp.Editor
 
         private void StartOverwriteIOSSetting()
         {
+            
             Debug.Log("iOS:AutomaticSign上書き " + _currentUnityProjectSetupConfig.GetIOSTurnONAutomaticSign);
             PlayerSettings.iOS.appleEnableAutomaticSigning = _currentUnityProjectSetupConfig.GetIOSTurnONAutomaticSign;
 
@@ -433,6 +462,9 @@ namespace SyskenTLib.MySetUp.Editor
                 Debug.Log("iOS:現在地利用理由上書き " + locationUsage);
                 PlayerSettings.iOS.locationUsageDescription = teamID;
             }
+
+            PlayerSettings.iOS.deferSystemGesturesMode = SystemGestureDeferMode.All;
+            Debug.Log("iOS:コントロールセンターを一発で開けないようにします ");
 
 
 

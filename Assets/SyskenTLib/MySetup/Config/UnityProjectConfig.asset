@@ -16,12 +16,12 @@ MonoBehaviour:
   _baseAppID: 
   _appName: demoapp
   _companyName: 
-  _IOSteamID: 
-  _iOSTurnONAutomaticSign: 0
-  _iOSSupportMinOSVersion: 17.5
-  _iOSCameraUsage: 
-  _iOSMicrophoneUsage: 
-  _iOSLocationUsage: 
+  _IOSTeamID: 
+  _IOSTurnONAutomaticSign: 0
+  _IOSSupportMinOSVersion: 17.5
+  _IOSCameraUsage: 
+  _IOSMicrophoneUsage: 
+  _IOSLocationUsage: 
   _androidSupportMinOSVersion: 32
   _androidTargetOSVersion: 34
-  _androidTargetOSVersionAddNum: 3
+  _androidTargetOSVersionAddNum: 1
