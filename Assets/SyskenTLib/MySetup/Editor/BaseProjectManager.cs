@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Text;
 using tokyo.sysken.CommonDefine;
 using UnityEditor;
 using UnityEditor.PackageManager;
@@ -8,6 +9,8 @@ using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 using UnityEngine.iOS;
 using UnityEngine.Rendering;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace SyskenTLib.MySetUp.Editor
 {
@@ -37,6 +40,10 @@ namespace SyskenTLib.MySetUp.Editor
         private AddRequest _currentAddRequest = null;
         
         
+        
+        //現在のログテキスト
+        private string _currentLogTxt = "";
+        
 
 
         public void InitReadConfig()
@@ -50,11 +57,43 @@ namespace SyskenTLib.MySetUp.Editor
             EditorApplication.update += OnEditorUpdate;
 
             InitReadConfig();
-
-            _currentSetupStatus = SetupStatus.Init;
             
-
-
+            _currentSetupStatus = SetupStatus.Init;
+            _currentLogTxt += "環境設定"+"\n";
+            _currentLogTxt += "CurrentDirectory:"+Environment.CurrentDirectory+"\n";
+            _currentLogTxt += "Version:"+Environment.Version+"\n";
+            _currentLogTxt += "MachineName:"+Environment.MachineName+"\n";
+            _currentLogTxt += "UserName:"+Environment.UserName+"\n";
+            _currentLogTxt += "OSVersion:"+Environment.OSVersion+"\n";
+            _currentLogTxt += ""+"\n";
+            _currentLogTxt += "UnityVersion:"+Application.unityVersion+"\n";
+            _currentLogTxt += ""+"\n";
+            _currentLogTxt += ""+"\n";
+            _currentLogTxt += ""+"\n";
+            _currentLogTxt += ""+"\n";
+            _currentLogTxt += ""+"\n";
+            _currentLogTxt += ""+"\n";
+            _currentLogTxt += ""+"\n";
+            _currentLogTxt += ""+"\n";
+            _currentLogTxt += ""+"\n";
+            _currentLogTxt += ""+"\n";
+            _currentLogTxt += ""+"\n";
+            _currentLogTxt += ""+"\n";
+            _currentLogTxt += ""+"\n";
+            _currentLogTxt += ""+"\n";
+            _currentLogTxt += ""+"\n";
+            _currentLogTxt += ""+"\n";
+            _currentLogTxt += ""+"\n";
+            _currentLogTxt += ""+"\n";
+            
+            _currentLogTxt += "================="+"\n";
+            _currentLogTxt += "================="+"\n";
+            _currentLogTxt += "プロジェクトの設定開始"+"\n";
+            _currentLogTxt += ""+DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")+"\n";
+            _currentLogTxt += ""+"\n";
+            _currentLogTxt += ""+"\n";
+            _currentLogTxt += "================="+"\n";
+            
             //
             StartNextProcess();
         }
@@ -193,7 +232,7 @@ namespace SyskenTLib.MySetUp.Editor
 
         private void StartDefaultPackage()
         {
-            Debug.Log("おすすめのパッケージインポート");
+            _currentLogTxt += "おすすめのパッケージインポート"+"\n";
             _currentPackageIndex = 0;
             StartImportDefaultPackage();
         }
@@ -201,7 +240,7 @@ namespace SyskenTLib.MySetUp.Editor
         private void StartImportDefaultPackage()
         {
             string nextPackageID = _currentBaseSetupConfig.GetTargetPackageIDList[_currentPackageIndex];
-            Debug.Log("次のパッケージ:" + nextPackageID);
+            _currentLogTxt += "次のパッケージ:" + nextPackageID+"\n";
             _currentAddRequest = Client.Add(nextPackageID);
         }
 
@@ -223,7 +262,7 @@ namespace SyskenTLib.MySetUp.Editor
                 else
                 {
                     //すべてインポート終了
-                    Debug.Log("すべてインポート終了");
+                    _currentLogTxt += "すべてインポート終了"+"\n";
                     StartNextProcess(); //次の処理
                 }
             }
@@ -233,16 +272,12 @@ namespace SyskenTLib.MySetUp.Editor
         #endregion
 
         #region ディレクトリ作成
-
-        public void CreateAllDirectory()
-        {
-
-            CreateAllDirectoryProcess();
-
-        }
+        
         
         private void StartCreateDirectory()
         {
+            _currentLogTxt += "================"+"\n";
+            _currentLogTxt += "ディレクトリの作成を開始"+"\n";
             CreateAllDirectoryProcess();
 
             StartNextProcess(); //次の処理
@@ -261,7 +296,7 @@ namespace SyskenTLib.MySetUp.Editor
 
         private void CreateDirectoryProcess(string dirPath)
         {
-            Debug.Log("ディレクトリ作成します。 " + dirPath);
+            _currentLogTxt += "ディレクトリ作成:" + dirPath+"\n";
             string saveDirPath = Path.GetDirectoryName(Application.dataPath);
             string createDirPath = saveDirPath + "/" + dirPath;
             string gitkeepPath = createDirPath + "/" + ".gitkeep";
@@ -285,8 +320,8 @@ namespace SyskenTLib.MySetUp.Editor
         
         private void StartUnityProjectSetting()
         {
-            Debug.Log("UnityProjectSettingの設定開始");
-
+            _currentLogTxt += "============="+"\n";
+            _currentLogTxt += "UnityProjectSettingの設定開始"+"\n";
             StartUnityProjectSettingProcess();
 
             StartNextProcess(); //次の処理
@@ -310,18 +345,24 @@ namespace SyskenTLib.MySetUp.Editor
 
         private void StartOverwriteAppIDProcess()
         {
+            _currentLogTxt += "=========="+"\n";
+            _currentLogTxt += "アプリIDの設定"+"\n";
+            
+            
             string overwriteAppID = "";
 
             switch (_currentUnityProjectSetupConfig.GetOverwriteAppIDType)
             {
                 case UnityProjectAppIDType.None:
                 {
+                    _currentLogTxt += "アプリIDは設定しません。"+"\n";
                     return;
                 }
 
                 case UnityProjectAppIDType.OverwriteBaseID:
                 {
                     overwriteAppID = _currentUnityProjectSetupConfig.GetBaseAppID;
+                    _currentLogTxt += "アプリIDを変更:"+overwriteAppID+"\n";
                     break;
                 }
 
@@ -329,6 +370,7 @@ namespace SyskenTLib.MySetUp.Editor
                 {
                     string dateTxt = DateTime.Now.ToString("yyyyMMddHHmmss");
                     overwriteAppID = _currentUnityProjectSetupConfig.GetBaseAppID + ".app" + dateTxt;
+                    _currentLogTxt += "アプリIDを変更:"+overwriteAppID+"\n";
                     break;
                 }
             }
@@ -337,8 +379,6 @@ namespace SyskenTLib.MySetUp.Editor
             {
                 return;
             }
-
-            Debug.Log("アプリIDを上書きします" + overwriteAppID);
 
             PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.iOS, overwriteAppID);
             PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.Android, overwriteAppID);
@@ -357,7 +397,8 @@ namespace SyskenTLib.MySetUp.Editor
             string appName = _currentUnityProjectSetupConfig.GetAppName;
             if (appName != "")
             {
-                Debug.Log("アプリ名を上書き:" + appName);
+                _currentLogTxt += "=============="+"\n";
+                _currentLogTxt += "アプリ名を上書き:" + appName+"\n";
                 PlayerSettings.productName = appName;
             }
 
@@ -368,7 +409,8 @@ namespace SyskenTLib.MySetUp.Editor
             string companyName = _currentUnityProjectSetupConfig.GetCompanyName;
             if (companyName != "")
             {
-                Debug.Log("会社名を上書き:" + companyName);
+                _currentLogTxt += "=============="+"\n";
+                _currentLogTxt += "会社名を上書き:" + companyName+"\n";
                 PlayerSettings.companyName = companyName;
             }
         }
@@ -376,7 +418,8 @@ namespace SyskenTLib.MySetUp.Editor
         private void StartPlatformCommonGeneral()
         {
             string appversion = "1.0.0";
-            Debug.Log("アプリバージョン  " + appversion);
+            _currentLogTxt += "=============="+"\n";
+            _currentLogTxt += "アプリバージョンを上書き:" + appversion+"\n";
             PlayerSettings.bundleVersion = appversion;
             
             
@@ -415,56 +458,60 @@ namespace SyskenTLib.MySetUp.Editor
 
         private void StartOverwriteWindowsSetting()
         {
+            _currentLogTxt += "===================="+"\n";
+            _currentLogTxt += "Windows用設定"+"\n";
             PlayerSettings.SetUseDefaultGraphicsAPIs(BuildTarget.StandaloneWindows64,false);
             PlayerSettings.SetGraphicsAPIs(BuildTarget.StandaloneWindows64,new GraphicsDeviceType[]{GraphicsDeviceType.Direct3D12});
-            Debug.Log("Windows: グラフィック  " + PlayerSettings.GetGraphicsAPIs(BuildTarget.StandaloneWindows64)[0]);
-
+            _currentLogTxt += "Windows: グラフィック  " + PlayerSettings.GetGraphicsAPIs(BuildTarget.StandaloneWindows64)[0]+"\n";
 
             PlayerSettings.useHDRDisplay = true;
-            Debug.Log("Windows: ディスプレイHDR対応：  " + PlayerSettings.useHDRDisplay );
+            _currentLogTxt += "Windows: ディスプレイHDR対応：  " + PlayerSettings.useHDRDisplay+"\n";
         }
 
 
         private void StartOverwriteIOSSetting()
         {
+            _currentLogTxt += "===================="+"\n";
+            _currentLogTxt += "iOS用設定"+"\n";
             
-            Debug.Log("iOS:AutomaticSign上書き " + _currentUnityProjectSetupConfig.GetIOSTurnONAutomaticSign);
+            
+            _currentLogTxt += "iOS:AutomaticSign上書き " + _currentUnityProjectSetupConfig.GetIOSTurnONAutomaticSign+"\n";
             PlayerSettings.iOS.appleEnableAutomaticSigning = _currentUnityProjectSetupConfig.GetIOSTurnONAutomaticSign;
 
             string teamID = _currentUnityProjectSetupConfig.GetIOSTeamID;
             if (teamID != "")
             {
-                Debug.Log("iOS:TeamID上書き " + teamID);
+                _currentLogTxt += "iOS:TeamID上書き " + teamID+"\n";
                 PlayerSettings.iOS.appleDeveloperTeamID = teamID;
             }
 
-            Debug.Log("iOS:サポートOSバージョン上書き " + _currentUnityProjectSetupConfig.GetIOSSupportMinOSVersion);
+            _currentLogTxt += "iOS:サポートOSバージョン上書き " + _currentUnityProjectSetupConfig.GetIOSSupportMinOSVersion+"\n";
             PlayerSettings.iOS.targetOSVersionString = _currentUnityProjectSetupConfig.GetIOSSupportMinOSVersion;
 
 
             string cameraUsage = _currentUnityProjectSetupConfig.GetIOSCamraUsage;
             if (cameraUsage != "")
             {
-                Debug.Log("iOS:カメラ利用理由上書き " + cameraUsage);
+                _currentLogTxt += "iOS:カメラ利用理由上書き " + cameraUsage+"\n";
                 PlayerSettings.iOS.cameraUsageDescription = cameraUsage;
             }
 
             string microphoneUsage = _currentUnityProjectSetupConfig.GetIOSMicrophoneUsage;
             if (microphoneUsage != "")
             {
-                Debug.Log("iOS:マイク利用理由上書き " + microphoneUsage);
+                _currentLogTxt += "iOS:マイク利用理由上書き " + microphoneUsage+"\n";
                 PlayerSettings.iOS.microphoneUsageDescription = microphoneUsage;
             }
 
             string locationUsage = _currentUnityProjectSetupConfig.GetIOSLocationUsage;
             if (locationUsage != "")
             {
-                Debug.Log("iOS:現在地利用理由上書き " + locationUsage);
+                _currentLogTxt += "iOS:現在地利用理由上書き " + locationUsage+"\n";
                 PlayerSettings.iOS.locationUsageDescription = teamID;
             }
 
             PlayerSettings.iOS.deferSystemGesturesMode = SystemGestureDeferMode.All;
-            Debug.Log("iOS:コントロールセンターを一発で開けないようにします ");
+            _currentLogTxt += "iOS:コントロールセンターを一発で開けないようにします "+"\n";
 
 
 
@@ -473,12 +520,13 @@ namespace SyskenTLib.MySetUp.Editor
 
         private void StartOverwriteAndroidSetting()
         {
+            _currentLogTxt += "===================="+"\n";
+            _currentLogTxt += "Android用設定"+"\n";
 
-
             //
             //
             //
-            Debug.Log("Android:サポートOSバージョン上書き " + _currentUnityProjectSetupConfig.GetAndroidSupportMinOSVersion);
+            _currentLogTxt += "Android:サポートOSバージョン上書き " + _currentUnityProjectSetupConfig.GetAndroidSupportMinOSVersion+"\n";
             PlayerSettings.Android.minSdkVersion = _currentUnityProjectSetupConfig.GetAndroidSupportMinOSVersion;
 
 
@@ -491,7 +539,7 @@ namespace SyskenTLib.MySetUp.Editor
                                                            _currentUnityProjectSetupConfig
                                                                .GetAndroidTargetOSVersionAddNum);
             
-            Debug.Log("Android:ターゲットOSバージョン上書き " + _androidTargetOSVersion);
+            _currentLogTxt += "Android:ターゲットOSバージョン上書き " + _androidTargetOSVersion+"\n";
             PlayerSettings.Android.targetSdkVersion = _androidTargetOSVersion;
 
             
@@ -499,7 +547,7 @@ namespace SyskenTLib.MySetUp.Editor
             //
             //
             ScriptingImplementation targetScriptingImplementation = ScriptingImplementation.IL2CPP;
-            Debug.Log("Android:ScriptBackend  " + targetScriptingImplementation);
+            _currentLogTxt += "Android:ScriptBackend  " + targetScriptingImplementation+"\n";
             PlayerSettings.SetScriptingBackend(BuildTargetGroup.Android, targetScriptingImplementation);
 
             //
@@ -507,7 +555,7 @@ namespace SyskenTLib.MySetUp.Editor
             //
 
             AndroidArchitecture targetArchitecture = AndroidArchitecture.ARM64;
-            Debug.Log("Android:アーキテクチャ  " + targetArchitecture);
+            _currentLogTxt += "Android:アーキテクチャ  " + targetArchitecture+"\n";
             PlayerSettings.Android.targetArchitectures = targetArchitecture;
             
             //
@@ -515,24 +563,26 @@ namespace SyskenTLib.MySetUp.Editor
             //
             PlayerSettings.SetUseDefaultGraphicsAPIs(BuildTarget.Android,false);
             PlayerSettings.SetGraphicsAPIs(BuildTarget.Android,new GraphicsDeviceType[]{GraphicsDeviceType.OpenGLES3});
-            Debug.Log("Android: グラフィック  " + PlayerSettings.GetGraphicsAPIs(BuildTarget.Android)[0]);
+            _currentLogTxt += "Android: グラフィック  " + PlayerSettings.GetGraphicsAPIs(BuildTarget.Android)[0]+"\n";
 
         }
 
         private void StartEditorOnProjectSetting()
         {
-
+            _currentLogTxt += "===================="+"\n";
+            _currentLogTxt += "UnityEditor設定"+"\n";
+            
+            
             //
             // オブジェクト複製時の名前法則
             //
             EditorSettings.gameObjectNamingScheme = EditorSettings.NamingScheme.Underscore;
             EditorSettings.gameObjectNamingDigits = 2;
-            Debug.Log("GameObject複製時の名前変更："+EditorSettings.gameObjectNamingScheme +"  桁："+EditorSettings.gameObjectNamingDigits);
-
-
-            Debug.Log("インポート時の設定");
+            _currentLogTxt += "GameObject複製時の名前変更："+EditorSettings.gameObjectNamingScheme +"  桁："+EditorSettings.gameObjectNamingDigits+"\n";
+            
             EditorSettings.refreshImportMode = AssetDatabase.RefreshImportMode.OutOfProcessPerQueue;
             EditorUserSettings.desiredImportWorkerCount = 4;
+            _currentLogTxt += "インポート時のプロセス数："+EditorUserSettings.desiredImportWorkerCount+"\n";
             AssetDatabase.SaveAssets();
             // EditorUserSettings.
         }
@@ -541,16 +591,13 @@ namespace SyskenTLib.MySetUp.Editor
         #endregion
 
         #region UnityLayerSetting
-
-        public void StartAddLayer()
-        {
-            StartAddLayerProcess();
-        }
         
         
         private void StartAddLayerSetting()
         {
-            Debug.Log("UnityのLayerの設定開始");
+            _currentLogTxt += "===================="+"\n";
+            _currentLogTxt += "UnityのLayerの設定開始"+"\n";
+
 
             StartAddLayerProcess();
 
@@ -564,8 +611,7 @@ namespace SyskenTLib.MySetUp.Editor
             string targetLayerText = _currentBaseSetupConfig.GetOriginalLayerSetting;
             
             string replaceLayerText = CreateAddLayerSettingText(CountTargetText(targetLayerText,"-"));
-            Debug.Log("AddLayer:"+replaceLayerText);
-
+            _currentLogTxt += "AddLayer:"+replaceLayerText+"\n";
 
             string savedText = layerSettingText.Replace(targetLayerText, replaceLayerText);
             
@@ -628,6 +674,23 @@ namespace SyskenTLib.MySetUp.Editor
             EditorApplication.update -= OnEditorUpdate;
             
             _completedSetUpAction?.Invoke();//終了の通知
+            
+            //
+            //ログ出力
+            //
+            _currentLogTxt += ""+"\n";
+            _currentLogTxt += ""+"\n";
+            _currentLogTxt += ""+"\n";
+            Debug.Log(_currentLogTxt);
+            
+            //ファイルへ出力
+            string desktopDirectoryPath =
+                Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+            string fileName = "unitylog" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt";
+            string saveFilePath = Path.Combine(desktopDirectoryPath, fileName);
+            Debug.Log("ログファイル： "+saveFilePath);
+            File.WriteAllText(saveFilePath,_currentLogTxt,Encoding.UTF8);
+
         }
         
         

@@ -15,6 +15,7 @@ MonoBehaviour:
   _targetPackageIDList:
   - com.unity.2d.sprite
   - com.unity.mobile.android-logcat
+  - com.unity.device-simulator.devices
   _createDirectoryPathList:
   - Assets/Main
   - Assets/TeamLib
