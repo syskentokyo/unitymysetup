@@ -1,12 +1,10 @@
 {
-    "name": "STLibMySetupEditor",
-    "rootNamespace": "SyskenTLib.MySetUp.Editor",
+    "name": "Main",
+    "rootNamespace": "",
     "references": [
         "GUID:637f940bd70764ce88374c546223190d"
     ],
-    "includePlatforms": [
-        "Editor"
-    ],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

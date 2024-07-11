@@ -634,14 +634,14 @@ namespace SyskenTLib.MySetUp.Editor
             rawText += "  - " + CommonLayer.Layer.None9.ToString() + "\n";
             rawText += "  - " + CommonLayer.Layer.Player.ToString() + "\n";
             rawText += "  - " + CommonLayer.Layer.PlayerItem.ToString() + "\n";
-            rawText += "  - " + CommonLayer.Layer.None12.ToString() + "\n";
-            rawText += "  - " + CommonLayer.Layer.None13.ToString() + "\n";
-            rawText += "  - " + CommonLayer.Layer.None14.ToString() + "\n";
-            rawText += "  - " + CommonLayer.Layer.Enemy.ToString() + "\n";
-            rawText += "  - " + CommonLayer.Layer.EnemyItem.ToString() + "\n";
-            rawText += "  - " + CommonLayer.Layer.None17.ToString() + "\n";
-            rawText += "  - " + CommonLayer.Layer.None18.ToString() + "\n";
-            rawText += "  - " + CommonLayer.Layer.None19.ToString() + "\n";
+            rawText += "  - " + CommonLayer.Layer.PlayerMySelf.ToString() + "\n";
+            rawText += "  - " + CommonLayer.Layer.PlayerMySelfItem.ToString() + "\n";
+            rawText += "  - " + CommonLayer.Layer.PlayerUI.ToString() + "\n";
+            rawText += "  - " + CommonLayer.Layer.PlayerSelfUI.ToString() + "\n";
+            rawText += "  - " + CommonLayer.Layer.Field1.ToString() + "\n";
+            rawText += "  - " + CommonLayer.Layer.Field2.ToString() + "\n";
+            rawText += "  - " + CommonLayer.Layer.Monster.ToString() + "\n";
+            rawText += "  - " + CommonLayer.Layer.MonsterItem.ToString() + "\n";
             rawText += "  - " + CommonLayer.Layer.None20.ToString() + "\n";
             rawText += "  - " + CommonLayer.Layer.None21.ToString() + "\n";
             rawText += "  - " + CommonLayer.Layer.FreeItem.ToString() + "\n";
@@ -650,8 +650,8 @@ namespace SyskenTLib.MySetUp.Editor
             rawText += "  - " + CommonLayer.Layer.None25.ToString() + "\n";
             rawText += "  - " + CommonLayer.Layer.None26.ToString() + "\n";
             rawText += "  - " + CommonLayer.Layer.ResultRender.ToString() + "\n";
-            rawText += "  - " + CommonLayer.Layer.None28.ToString() + "\n";
-            rawText += "  - " + CommonLayer.Layer.None29.ToString() + "\n";
+            rawText += "  - " + CommonLayer.Layer.UIEffect.ToString() + "\n";
+            rawText += "  - " + CommonLayer.Layer.DebugUI.ToString() + "\n";
             rawText += "  - " + CommonLayer.Layer.None30.ToString() + "\n";
             rawText += "  - " + CommonLayer.Layer.None31.ToString() + "\n";
             
